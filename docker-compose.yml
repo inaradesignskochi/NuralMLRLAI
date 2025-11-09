@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smc-bot-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - ENVIRONMENT_MODE=${ENVIRONMENT_MODE:-testnet}
+      - DELTA_TESTNET_API_KEY=${DELTA_TESTNET_API_KEY}
+      - DELTA_TESTNET_SECRET=${DELTA_TESTNET_SECRET}
+      - DELTA_LIVE_API_KEY=${DELTA_LIVE_API_KEY:-}
+      - DELTA_LIVE_SECRET=${DELTA_LIVE_SECRET:-}
+    volumes:
+      - ./backend:/app
+      - ./models:/app/models
+      - bot-logs:/app/logs
+    networks:
+      - smc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smc-bot-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - smc-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  bot-logs:
+    driver: local
+
+networks:
+  smc-network:
+    driver: bridge

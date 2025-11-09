@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMC Trading Bot Dashboard</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 SMC Trading Bot</h1>
+            <div class="status-bar">
+                <div class="status-indicator">
+                    <div id="bot-status-dot" class="status-dot stopped"></div>
+                    <span id="bot-status-text">Stopped</span>
+                </div>
+                <div class="environment-indicator">
+                    <span id="environment-badge" class="badge testnet">TESTNET</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Control Panel -->
+            <section class="card">
+                <h2>Control Panel</h2>
+                <div class="control-buttons">
+                    <button id="start-bot-btn" class="btn btn-success">Start Bot</button>
+                    <button id="stop-bot-btn" class="btn btn-danger">Stop Bot</button>
+                    <button id="switch-env-btn" class="btn btn-secondary">Switch to Live</button>
+                </div>
+            </section>
+
+            <!-- Performance Metrics -->
+            <section class="card">
+                <h2>Performance Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <h3>Total P&L</h3>
+                        <p id="total-pnl" class="metric-value">$0.00</p>
+                    </div>
+                    <div class="metric">
+                        <h3>Win Rate</h3>
+                        <p id="win-rate" class="metric-value">0.0%</p>
+                    </div>
+                    <div class="metric">
+                        <h3>Open Trades</h3>
+                        <p id="open-trades" class="metric-value">0</p>
+                    </div>
+                    <div class="metric">
+                        <h3>Account Balance</h3>
+                        <p id="account-balance" class="metric-value">$10,000.00</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Open Trades -->
+            <section class="card">
+                <h2>Open Trades</h2>
+                <div id="open-trades-table">
+                    <p class="no-data">No open trades</p>
+                </div>
+            </section>
+
+            <!-- Recent Trades -->
+            <section class="card">
+                <h2>Recent Trades</h2>
+                <div id="recent-trades-table">
+                    <p class="no-data">No recent trades</p>
+                </div>
+            </section>
+
+            <!-- Trading Parameters -->
+            <section class="card">
+                <h2>Trading Parameters</h2>
+                <div class="parameters-grid">
+                    <div class="parameter-group">
+                        <h3>Risk Parameters</h3>
+                        <div id="risk-params">
+                            <p>Loading...</p>
+                        </div>
+                    </div>
+                    <div class="parameter-group">
+                        <h3>Trading Parameters</h3>
+                        <div id="trading-params">
+                            <p>Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="static/js/app.js"></script>
+</body>
+</html>

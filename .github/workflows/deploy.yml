@@ -1,0 +1,31 @@
+name: Deploy to Oracle Cloud VPS
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.ORACLE_VPS_IP }}
+        username: ubuntu
+        key: ${{ secrets.ORACLE_SSH_KEY }}
+        script: |
+          cd /opt/smc-bot
+          git pull origin master
+          docker-compose down
+          docker-compose build --no-cache
+          docker-compose up -d
+          docker-compose ps
+          echo "✅ Deployment complete!"
